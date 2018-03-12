@@ -15,6 +15,8 @@ import (
 	"github.com/syndtr/goleveldb/leveldb/opt"
 )
 
+const dbVersion = 1
+
 const (
 	KeyTypeDevice = iota
 	KeyTypeGlobal
@@ -26,6 +28,7 @@ const (
 	KeyTypeDeviceIdx
 	KeyTypeIndexID
 	KeyTypeFolderMeta
+	KeyTypeMiscData
 )
 
 func (l VersionList) String() string {
