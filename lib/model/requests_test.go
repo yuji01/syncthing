@@ -37,10 +37,11 @@ func TestIgnoreDeleteUnignore(t *testing.T) {
 	basicCheck := func(fs []protocol.FileInfo) {
 		t.Helper()
 		if len(fs) != 1 {
-			t.Fatal("expected a single index entry, got", len(fs))
+			t.Error("expected a single index entry, got", len(fs))
 		} else if fs[0].Name != file {
-			t.Fatalf("expected a index entry for %v, got one for %v", file, fs[0].Name)
+			t.Errorf("expected a index entry for %v, got one for %v", file, fs[0].Name)
 		}
+		l.Infoln("received", fs[0])
 	}
 
 	done := make(chan struct{})
@@ -52,7 +53,7 @@ func TestIgnoreDeleteUnignore(t *testing.T) {
 	fc.mut.Unlock()
 
 	if err := writeFile(fss, file, contents, 0644); err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	m.ScanFolders()
 
