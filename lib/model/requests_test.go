@@ -68,7 +68,7 @@ func TestIgnoreDeleteUnignore(t *testing.T) {
 		basicCheck(fs)
 		f := fs[0]
 		if !f.IsInvalid() {
-			t.Errorf("Received non-invalid index update")
+			t.Errorf("Received non-invalid index update: %v", f)
 		}
 		close(done)
 	}
