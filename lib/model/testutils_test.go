@@ -70,6 +70,16 @@ func init() {
 	}
 }
 
+func createTmpWrapper(cfg config.Configuration) config.Wrapper {
+	tmpFile, err := ioutil.TempFile("", "syncthing-testConfig-")
+	if err != nil {
+		panic(err)
+	}
+	wrapper := config.Wrap(tmpFile.Name(), cfg, myID, events.NoopLogger)
+	tmpFile.Close()
+	return wrapper
+}
+
 func tmpDefaultWrapper() (config.Wrapper, config.FolderConfiguration) {
 	w := createTmpWrapper(defaultCfgWrapper.RawCopy())
 	fcfg := testFolderConfigTmp()
@@ -295,4 +305,19 @@ func localIndexUpdate(m *testModel, folder string, fs []protocol.FileInfo) {
 		"sequence":  seq,
 		"version":   seq, // legacy for sequence
 	})
+}
+
+func writeFile(fs fs.Filesystem, filename string, data []byte, perm fs.FileMode) error {
+	fd, err := fs.Create(filename)
+	if err != nil {
+		return err
+	}
+	_, err = fd.Write(data)
+	if err != nil {
+		return err
+	}
+	if err := fd.Close(); err != nil {
+		return err
+	}
+	return fs.Chmod(filename, perm)
 }
