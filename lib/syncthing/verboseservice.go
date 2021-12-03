@@ -80,7 +80,7 @@ func (s *verboseService) formatEvent(ev events.Event) string {
 
 	case events.RemoteIndexUpdated:
 		data := ev.Data.(map[string]interface{})
-		return fmt.Sprintf("Device %v sent an index update for %q with %d items", data["device"], data["folder"], data["items"])
+		return fmt.Sprintf("Device %v sent an index update for %q with %d items, sequence %d-%d => %d, update %v", data["device"], data["folder"], data["items"], data["minSeq"], data["maxSeq"], data["sequence"], data["update"])
 
 	case events.DeviceRejected:
 		data := ev.Data.(map[string]string)

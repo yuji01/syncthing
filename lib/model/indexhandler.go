@@ -336,12 +336,28 @@ func (s *indexHandler) receive(fs []protocol.FileInfo, update bool, op string) e
 	}
 	fset.Update(deviceID, fs)
 
+	var minSeq, maxSeq int64
+	if len(fs) > 0 {
+		maxSeq, minSeq = fs[0].SequenceNo(), fs[0].SequenceNo()
+		for _, f := range fs {
+			if f.SequenceNo() < minSeq {
+				minSeq = f.SequenceNo()
+			}
+			if f.SequenceNo() > maxSeq {
+				maxSeq = f.SequenceNo()
+			}
+		}
+	}
+
 	seq := fset.Sequence(deviceID)
 	s.evLogger.Log(events.RemoteIndexUpdated, map[string]interface{}{
 		"device":   deviceID.String(),
 		"folder":   s.folder,
 		"items":    len(fs),
 		"sequence": seq,
+		"update":   update,
+		"minSeq":   minSeq,
+		"maxSeq":   maxSeq,
 		"version":  seq, // legacy for sequence
 	})
 

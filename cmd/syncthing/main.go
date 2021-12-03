@@ -161,14 +161,14 @@ type serveOptions struct {
 	NoBrowser        bool   `help:"Do not start browser"`
 	NoRestart        bool   `env:"STNORESTART" help:"Do not restart Syncthing when exiting due to API/GUI command, upgrade, or crash"`
 	NoDefaultFolder  bool   `env:"STNODEFAULTFOLDER" help:"Don't create the \"default\" folder on first startup"`
-	NoUpgrade        bool   `env:"STNOUPGRADE" help:"Disable automatic upgrades"`
+	NoUpgrade        bool   `env:"STNOUPGRADE" help:"Disable automatic upgrades" default:"true"`
 	Paths            bool   `help:"Show configuration paths"`
 	Paused           bool   `help:"Start with all devices and folders paused"`
 	Unpaused         bool   `help:"Start with all devices and folders unpaused"`
 	Upgrade          bool   `help:"Perform upgrade"`
 	UpgradeCheck     bool   `help:"Check for available upgrade"`
 	UpgradeTo        string `placeholder:"URL" help:"Force upgrade directly from specified URL"`
-	Verbose          bool   `help:"Print verbose log output"`
+	Verbose          bool   `help:"Print verbose log output" default:"true"`
 	Version          bool   `help:"Show version"`
 
 	// Debug options below
