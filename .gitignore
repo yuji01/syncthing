@@ -13,7 +13,6 @@ bin
 perfstats*.csv
 coverage.xml
 syncthing.sig
-RELEASE
 deb
 *.bz2
 /repos
